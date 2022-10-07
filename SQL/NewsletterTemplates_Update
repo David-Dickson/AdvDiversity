@@ -1,0 +1,70 @@
+USE [AdvDiversity]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: David Dickson
+-- Create date: 6/12/2022
+-- Description: NewsletterTemplates Update
+-- Code Reviewer: Brian Velasco
+
+-- MODIFIED BY: Author
+-- MODIFIED DATE:
+-- Code Reviewer:
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[NewsletterTemplates_Update]
+	  @Id int
+      ,@Name nvarchar(100)
+      ,@Description nvarchar(200)
+      ,@PrimaryImage nvarchar(255)
+      ,@CreatedBy int
+
+as
+
+/*  ----TEST CODE ----
+
+	Declare @Id int = 58
+
+	Declare
+	    @Name nvarchar(100) = 'Arturo Baninis newsletter template'
+			,@Description nvarchar(200) = 'description'
+			,@PrimaryImage nvarchar(255) = 'http://google.com'
+			,@CreatedBy int = 53
+
+	Select *
+		From [dbo].[NewsletterTemplates]
+		Where Id = @Id
+
+	Execute [dbo].[NewsletterTemplates_Update]	
+			@Id
+			,@Name 
+			,@Description 
+			,@PrimaryImage 
+			,@CreatedBy 
+
+	Select *
+		From [dbo].[NewsletterTemplates]
+		Where Id = @Id
+
+
+*/
+
+BEGIN
+
+	Declare @DateNow datetime2(7) = getutcdate()
+
+	UPDATE [dbo].[NewsletterTemplates]
+   SET [Name] = @Name
+      ,[Description] = @Description
+      ,[PrimaryImage] = @PrimaryImage
+      ,[DateModified] = @DateNow
+      ,[CreatedBy] = @CreatedBy
+ WHERE Id = @Id
+
+END
