@@ -1,0 +1,48 @@
+USE [AdvDiversity]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:	David Dickson
+-- Create date: 6/9/2022
+-- Description:	Delete_ById for Newsletter Template
+-- Code Reviewer: Brian Velasco
+
+
+-- MODIFIED BY: author
+-- MODIFIED DATE: 
+-- Code Reviewer: 
+-- Note: 
+-- =============================================
+
+ALTER proc [dbo].[NewsletterTemplates_Delete_ById]
+	@Id int
+	   
+as
+
+/* ----TEST CODE----
+
+Declare @Id int = 54
+
+Select *
+	From [dbo].[NewsletterTemplates]
+	Where Id = @Id
+
+Execute [dbo].[NewsletterTemplates_Delete_ById] @Id
+
+Select *
+	From [dbo].[NewsletterTemplates]
+	Where Id = @Id
+
+*/
+Begin
+
+
+DELETE FROM [dbo].[NewsletterTemplates]
+      WHERE Id = @Id
+
+End
+
