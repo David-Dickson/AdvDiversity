@@ -1,0 +1,74 @@
+USE [AdvDiversity]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author: David Dickson
+-- Create date: 6/10/2022
+-- Description: NewsletterTemplates Select All Paginated
+-- Code Reviewer: Brian Velasco
+
+-- MODIFIED BY: Author
+-- MODIFIED DATE:
+-- Code Reviewer:
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[NewsletterTemplates_SelectAllPaginated]
+	@PageIndex int
+	,@PageSize int
+
+as
+
+/* -----TEST CODE-----
+
+	Declare 
+			@PageIndex int = 0
+			,@PageSize int = 10
+
+Execute [dbo].[NewsletterTemplates_SelectAllPaginated]
+			@PageIndex
+			,@PageSize
+
+*/
+
+Begin
+
+	Declare @Offset int = @PageIndex * @PageSize
+
+	--SELECT nt.[Id]
+	--	  ,nt.[Name]
+	--	  ,nt.[Description]
+	--	  ,nt.[PrimaryImage]
+	--	  ,nt.[DateCreated]
+	--	  ,nt.[DateModified]
+	--	  ,u.Email as [CreatedBy]
+	--	  ,TotalCount = COUNT(1) OVER()
+
+	--FROM [dbo].[NewsletterTemplates] as nt inner join [dbo].[Users] as u
+	--on u.Id = nt.CreatedBy
+
+	--Order By nt.Id
+
+		SELECT [Id]
+		  ,[Name]
+		  ,[Description]
+		  ,[PrimaryImage]
+		  ,[DateCreated]
+		  ,[DateModified]
+		  ,[CreatedBy]
+		  ,TotalCount = COUNT(1) OVER()
+
+	FROM [dbo].[NewsletterTemplates]
+	
+	Order By Id DESC
+
+	Offset @Offset Rows
+	Fetch Next @PageSize Rows Only;
+
+End
