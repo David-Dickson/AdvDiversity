@@ -1,0 +1,69 @@
+USE [AdvDiversity]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+    -- Author: David Dickson
+    -- Create date: 6/12/2022
+    -- Description: Insert records for [dbo].[NewsletterTemplates_Insert]
+    -- Code Reviewer: Brian Velasco
+
+    -- MODIFIED BY: Author
+    -- MODIFIED DATE:
+    -- Code Reviewer:
+    -- Note:
+-- ==============================================
+
+ALTER proc [dbo].[NewsletterTemplates_Insert]
+			@Name nvarchar(100)
+			,@Description nvarchar(200)
+			,@PrimaryImage nvarchar(255)
+			,@CreatedBy int
+			,@Id int OUTPUT 
+AS
+
+/*----- TEST CODE -----
+
+	Declare @Id int = 0
+
+	Declare
+			@Name nvarchar(100) = 'Pt 2 Arturo Bandini'
+			,@Description nvarchar(200) = 'Pt 2Newsletter template for Arturo Bandini'
+			,@PrimaryImage nvarchar(255) = 'http://google.com'
+			,@CreatedBy int = 58
+			
+	Execute [dbo].[NewsletterTemplates_Insert]	
+			@Name 
+			,@Description 
+			,@PrimaryImage 
+			,@CreatedBy 
+			,@Id OUTPUT
+			
+	Select *
+	From [dbo].[NewsletterTemplates]
+
+			
+------ END TEST CODE ------
+*/
+
+BEGIN 
+
+	INSERT INTO [dbo].[NewsletterTemplates]
+			([Name]
+			,[Description]
+			,[PrimaryImage]
+			,[CreatedBy])
+	VALUES (@Name
+			,@Description
+			,@PrimaryImage
+			,@CreatedBy)
+		   			
+	SET @Id = SCOPE_IDENTITY()
+
+END
+
+
