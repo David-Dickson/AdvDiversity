@@ -1,0 +1,81 @@
+USE [AdvDiversity]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author: David Dickson
+-- Create date: 6/10/2022
+-- Description: NewsletterTemplates Select All Paginated
+-- Code Reviewer: Brian Velasco
+
+-- MODIFIED BY: Author
+-- MODIFIED DATE:
+-- Code Reviewer:
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[NewsletterTemplates_SelectBy_Search]
+	@PageIndex int
+	,@PageSize int
+	,@Query nvarchar (255)
+
+as
+
+/* -----TEST CODE-----
+
+	Select *
+	From [dbo].[NewsletterTemplates]
+
+	Declare 
+			@PageIndex int = 0
+			,@PageSize int = 10
+			,@Query nvarchar(255) = 'carefree'
+
+Execute [dbo].[NewsletterTemplates_SelectBy_Search]
+			@PageIndex
+			,@PageSize
+			,@Query
+*/
+
+Begin
+
+	Declare @Offset int = @PageIndex * @PageSize
+
+	--SELECT nt.[Id]
+	--	  ,nt.[Name]
+	--	  ,nt.[Description]
+	--	  ,nt.[PrimaryImage]
+	--	  ,nt.[DateCreated]
+	--	  ,nt.[DateModified]
+	--	  ,u.Email as [CreatedBy]
+	--	  ,TotalCount = COUNT(1) OVER()
+
+	--FROM [dbo].[NewsletterTemplates] as nt inner join [dbo].[Users] as u
+	--on u.Id = nt.CreatedBy
+
+	--Order By nt.Id
+
+		SELECT [Id]
+		  ,[Name]
+		  ,[Description]
+		  ,[PrimaryImage]
+		  ,[DateCreated]
+		  ,[DateModified]
+		  ,[CreatedBy]
+		  ,TotalCount = COUNT(1) OVER()
+
+	FROM [dbo].[NewsletterTemplates]
+	WHERE (Description LIKE '%' + @Query + '%')
+			OR (Name LIKE '%' + @Query + '%')
+	
+	Order By Id DESC
+
+	Offset @Offset Rows
+	Fetch Next @PageSize Rows Only;
+
+End
